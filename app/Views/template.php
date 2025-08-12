@@ -22,22 +22,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Home</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact</a>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- ✅ Bootstrap Content -->
+   
     <div class="container mt-5">
         <h1 class="text-success">Hello from Bootstrap!</h1>
         <p>This is my integrated Bootstrap layout.</p>
-        <button class="btn btn-success">Click Me</button>
     </div>
 
 </body>
