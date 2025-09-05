@@ -25,9 +25,7 @@ class Auth extends BaseController
         if ($this->request->getMethod() === 'POST') {
             // Set validation rules
             $rules = [
-                'first_name' => 'required|min_length[2]|max_length[100]',
-                'middle_initial' => 'permit_empty|max_length[5]',
-                'last_name' => 'required|min_length[2]|max_length[100]',
+                'name' => 'required|min_length[2]|max_length[100]',
                 'email' => 'required|valid_email|is_unique[users.email]',
                 'password' => 'required|min_length[6]',
                 'password_confirm' => 'required|matches[password]'
@@ -38,21 +36,17 @@ class Auth extends BaseController
             }
 
             // Get form data
-            $firstName = $this->request->getPost('first_name');
-            $middleInitial = $this->request->getPost('middle_initial');
-            $lastName = $this->request->getPost('last_name');
+            $name = $this->request->getPost('name');
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
-            $role = $this->request->getPost('role') ?? 'student';
+            $role = $this->request->getPost('role') ?? 'user';
 
             // Hash the password
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
             // Insert user into database
             $data = [
-                'first_name' => $firstName,
-                'middle_initial' => $middleInitial,
-                'last_name' => $lastName,
+                'name' => $name,
                 'email' => $email,
                 'password' => $hashedPassword,
                 'role' => $role,
@@ -98,27 +92,17 @@ class Auth extends BaseController
             $user = $builder->where('email', $email)->get()->getRowArray();
 
             if ($user && password_verify($password, $user['password'])) {
-                // Create full name with middle initial
-                $fullName = $user['first_name'];
-                if (!empty($user['middle_initial'])) {
-                    $fullName .= ' ' . $user['middle_initial'];
-                }
-                $fullName .= ' ' . $user['last_name'];
-
                 // Set session data
                 $sessionData = [
                     'userID' => $user['id'],
-                    'first_name' => $user['first_name'],
-                    'middle_initial' => $user['middle_initial'],
-                    'last_name' => $user['last_name'],
-                    'full_name' => $fullName,
+                    'name' => $user['name'],
                     'email' => $user['email'],
                     'role' => $user['role'],
                     'isLoggedIn' => true
                 ];
                 $this->session->set($sessionData);
 
-                $this->session->setFlashdata('success', 'Welcome back, ' . $user['first_name'] . '!');
+                $this->session->setFlashdata('success', 'Welcome back, ' . $user['name'] . '!');
                 return redirect()->to('/dashboard');
             } else {
                 $this->session->setFlashdata('error', 'Invalid email or password.');
@@ -146,10 +130,7 @@ class Auth extends BaseController
         $data = [
             'user' => [
                 'id' => $this->session->get('userID'),
-                'first_name' => $this->session->get('first_name'),
-                'middle_initial' => $this->session->get('middle_initial'),
-                'last_name' => $this->session->get('last_name'),
-                'full_name' => $this->session->get('full_name'),
+                'name' => $this->session->get('name'),
                 'email' => $this->session->get('email'),
                 'role' => $this->session->get('role')
             ]

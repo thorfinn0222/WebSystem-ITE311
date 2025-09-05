@@ -64,8 +64,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
                                     <select class="form-select" id="role" name="role">
-                                        <option value="student" <?= old('role') === 'student' ? 'selected' : '' ?>>Student</option>
-                                        <option value="instructor" <?= old('role') === 'instructor' ? 'selected' : '' ?>>Instructor</option>
+                                        <option value="user" <?= old('role') === 'user' ? 'selected' : '' ?>>User</option>
                                         <option value="admin" <?= old('role') === 'admin' ? 'selected' : '' ?>>Admin</option>
                                     </select>
                                 </div>
