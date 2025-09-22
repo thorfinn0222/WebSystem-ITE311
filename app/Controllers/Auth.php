@@ -34,14 +34,11 @@ class Auth extends BaseController
             $password = $this->request->getPost('password');
             $role = $this->request->getPost('role') ?? 'user';
 
-            // Hash the password
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // Insert user into database
             $data = [
                 'name' => $name,
                 'email' => $email,
-                'password' => $hashedPassword,
+                'password'   => password_hash($password, PASSWORD_DEFAULT),
                 'role' => $role,
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
