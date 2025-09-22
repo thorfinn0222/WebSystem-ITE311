@@ -9,11 +9,7 @@ class Auth extends BaseController
     protected $db;
     protected $session;
 
-    public function __construct()
-    {
-        $this->db = \Config\Database::connect();
-        $this->session = \Config\Services::session();
-    }
+   
 
     public function register()
     {
@@ -67,50 +63,52 @@ class Auth extends BaseController
     }
 
     public function login()
-    {
-        // If user is already logged in, redirect to dashboard
-        if ($this->session->get('userID')) {
-            return redirect()->to('/dashboard');
-        }
+{
+    $db = \Config\Database::connect();
+    $session = session();
 
-        if ($this->request->getMethod() === 'POST') {
-            // Set validation rules
-            $rules = [
-                'email' => 'required|valid_email',
-                'password' => 'required'
-            ];
-
-            if (!$this->validate($rules)) {
-                return view('auth/login', ['validation' => $this->validator]);
-            }
-
-            $email = $this->request->getPost('email');
-            $password = $this->request->getPost('password');
-
-            // Check if user exists
-            $builder = $this->db->table('users');
-            $user = $builder->where('email', $email)->get()->getRowArray();
-
-            if ($user && password_verify($password, $user['password'])) {
-                // Set session data
-                $sessionData = [
-                    'userID' => $user['id'],
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'role' => $user['role'],
-                    'isLoggedIn' => true
-                ];
-                $this->session->set($sessionData);
-
-                $this->session->setFlashdata('success', 'Welcome back, ' . $user['name'] . '!');
-                return redirect()->to('/dashboard');
-            } else {
-                $this->session->setFlashdata('error', 'Invalid email or password.');
-            }
-        }
-
-        return view('auth/login');
+    // If user is already logged in, redirect to dashboard
+    if ($session->get('userID')) {
+        return redirect()->to('/dashboard');
     }
+
+    if ($this->request->getMethod() === 'POST') {
+        $rules = [
+            'email' => 'required|valid_email',
+            'password' => 'required'
+        ];
+
+        if (!$this->validate($rules)) {
+            return view('auth/login', ['validation' => $this->validator]);
+        }
+
+        $email = $this->request->getPost('email');
+        $password = $this->request->getPost('password');
+
+        // Check if user exists
+        $builder = $db->table('users');
+        $user = $builder->where('email', $email)->get()->getRowArray();
+
+        if ($user && password_verify($password, $user['password'])) {
+            // Set session data
+            $session->set([
+                'userID' => $user['id'],
+                'name'   => $user['name'],
+                'email'  => $user['email'],
+                'role'   => $user['role'],
+                'isLoggedIn' => true
+            ]);
+
+            $session->setFlashdata('success', 'Welcome back, ' . $user['name'] . '!');
+            return redirect()->to('/dashboard');
+        } else {
+            $session->setFlashdata('error', 'Invalid email or password.');
+        }
+    }
+
+    return view('auth/login');
+}
+
 
     public function logout()
     {
