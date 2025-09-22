@@ -94,8 +94,15 @@ class Auth extends BaseController
                     'isLoggedIn' => true
                 ]);
 
-                $session->setFlashdata('success', 'Welcome back, ' . $user['name'] . '!');
-                return redirect()->to('/dashboard');
+
+               switch ($user['role']) {
+                case 'admin':
+                    return redirect()->to('admin/dashboard');
+                case 'teacher':
+                    return redirect()->to('teacher/dashboard');
+                case 'student':
+                    return redirect()->to('student/dashboard');
+                }
             } else {
                 $session->setFlashdata('error', 'Invalid email or password.');
             }
