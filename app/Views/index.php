@@ -14,21 +14,25 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                 <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/') ?>">Home</a>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('home') ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/about') ?>">About</a>
+                        <a class="nav-link" href="<?= base_url('about') ?>">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/contact') ?>">Contact</a>
+                        <a class="nav-link" href="<?= base_url('contact') ?>">Contact</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                       <a class="nav-link" href="<?= base_url('login') ?>">Login</a>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="<?= base_url('/login') ?>">Login</a>
+                        <a class="nav-link" href="<?= base_url('register') ?>">Register</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/register') ?>">Register</a>
-                    </li>
+                </ul>
             </div>
         </div>
     </nav>
