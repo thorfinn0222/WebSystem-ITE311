@@ -1,5 +1,14 @@
 <?php
 
+// Block direct access via /public/ URLs
+if (strpos($_SERVER['REQUEST_URI'], '/public/') !== false) {
+    header('HTTP/1.1 403 Forbidden');
+    echo '<h1>403 Forbidden</h1>';
+    echo '<p>You don\'t have permission to access this resource.</p>';
+    echo '<p>Please use the clean URL without "/public/" in the path.</p>';
+    exit();
+}
+
 use CodeIgniter\Boot;
 use Config\Paths;
 
