@@ -18,7 +18,6 @@ $routes->post('register', 'Auth::register');
 $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
-$routes->get('dashboard', 'Auth::dashboard');
 
-// Enable auto-routing for now to help with debugging
-//$routes->setAutoRoute(true);
+$routes->get('dashboard', 'Auth::dashboard');
+$routes->setAutoRoute(true);
