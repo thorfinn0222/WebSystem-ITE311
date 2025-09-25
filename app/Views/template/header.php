@@ -8,7 +8,7 @@
 </head>
 <body>
     
-<nav class="navbar navbar-expand-lg  bg-success">
+<nav class="navbar navbar-expand-lg navbar-white bg-success">
     <div class="container-fluid">
         <a class="navbar-brand" href="/dashboard">ITE311 System</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
