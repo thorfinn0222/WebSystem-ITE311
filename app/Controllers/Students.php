@@ -11,8 +11,8 @@ class Students extends BaseController
             return redirect()->to(base_url('/login'));
         }
         
-        if (session('role') !== 'students') {
-            session()->setFlashdata('error', 'You do not have permission to access');
+        if (session()->get('role') !== 'student') {
+            session()->flashdata('error', 'You do not have permission to access');
             return redirect()->to(base_url('/login'));
         }
         
@@ -23,5 +23,5 @@ class Students extends BaseController
                 'role' => session('role'),
             ]
         ]);
-        }
+    }
 }

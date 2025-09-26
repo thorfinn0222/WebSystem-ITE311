@@ -97,16 +97,16 @@ class Auth extends BaseController
 
             switch ($user['role']) {
                     case 'admin':
-                        return redirect()->to(base_url('index.php/admin/dashboard'));
+                        return redirect()->to('/admin/dashboard');
                     case 'teacher':
-                        return redirect()->to(base_url('index.php/teacher/dashboard'));
+                        return redirect()->to('/teacher/dashboard');
                     case 'student':
-                        return redirect()->to(base_url('index.php/student/dashboard'));
+                        return redirect()->to('/student/dashboard');
                     default:
                         // Unknown role: clear session and go back to login
                         session()->destroy();
                         session()->setFlashdata('error', 'Your account role is not recognized.');
-                        return redirect()->to(base_url('index.php/login'));
+                        return redirect()->to(base_url('/login'));
                 }
             } else {
                 $session->setFlashdata('error', 'Invalid email or password.');

@@ -11,17 +11,17 @@ class Admin extends BaseController
             return redirect()->to(base_url('/login'));
         }
         
-        if (session('role') !== 'admin') {
+        if (session()->get('role') !== 'admin') {
             session()->setFlashdata('error', 'You do not have permission to access');
             return redirect()->to(base_url('/login'));
         }
         
         return view('auth/dashboard', [
             'user' => [
-                'name' => session('name'),
-                'email' => session('email'),
-                'role' => session('role'),
+                'name' => session()->get('name'),
+                'email' => session()->get('email'),
+                'role' => session()->get('role'),
             ]
         ]);
-        }
+    }
 }
